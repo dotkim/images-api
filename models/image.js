@@ -7,7 +7,8 @@ const imageSchema = new Schema({
   'url': String,
   'thumbnail': String,
   'tags': Array,
-  'checksum': String
+  'checksum': String,
+  'excludedGuilds': Array
 }, {
   timestamps: true
 });

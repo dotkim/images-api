@@ -250,4 +250,18 @@ module.exports = class {
       return 'err';
     }
   }
+
+  async excludeImage(fileName, guildId) {
+    try {
+      return await this.images.findOneAndUpdate(
+        { fileName },
+        { '$addToSet': { 'excludedGuilds': guildId } }
+      ).
+      select('-_id -__v');
+    } catch (error) {
+      console.error(dateString(), '- got error');
+      console.error(error);
+      return 'err';
+    }
+  }
 }
