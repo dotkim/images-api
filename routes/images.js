@@ -26,7 +26,9 @@ router.route('/').get(async (req, res) => {
 
 router.route('/getRandom').get(async (req, res) => {
   try {
-    let data = await images.getRandom();
+    let parsedUrl = url.parse(req.url);
+    let parsedQuery = querystring.parse(parsedUrl.query);
+    let data = await images.getRandom(parsedQuery.guild, parsedQuery.tag);
     
     res.status(data.statuscode);
     if (data.statuscode === 200) res.json(data.content);

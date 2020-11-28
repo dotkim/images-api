@@ -61,9 +61,14 @@ class Images {
     }
   }
 
-  async getRandom() {
+  async getRandom(guild, tag) {
     try {
-      let data = await db.randomImage();
+      //eslint-disable-next-line no-param-reassign
+      if (!guild) return { statuscode: 404 };
+      //eslint-disable-next-line no-param-reassign
+      if (!tag) tag = 'tagme';
+
+      let data = await db.randomImage(guild, tag);
       if (!data) return { statuscode: 404 };
       if (data === 'err') return { statuscode: 500 };
 

@@ -151,13 +151,19 @@ module.exports = class {
     }
   }
 
-  async randomImage() {
+  async randomImage(guild, tag) {
     try {
-      const count = await this.images.countDocuments();
+      const count = await this.images.countDocuments({
+        'tags': { $in: [tag] },
+        'excludedGuilds': { $nin: [guild]}
+      });
       const random = Math.floor(Math.random() * count);
 
       return await this.images.
-        findOne().
+        findOne({
+          'tags': { $in: [tag] },
+          'excludedGuilds': { $nin: [guild]}
+        }).
         skip(random);
     } catch (error) {
       console.error(dateString(), '- got error');
